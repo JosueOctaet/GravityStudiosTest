@@ -1,9 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEditor.Rendering.LookDev;
 using UnityEngine;
 using UnityEngine.UI;
 
+// This script defines an ItemType enumeration
 public enum ItemType
 {
     Weapon,
@@ -25,14 +23,16 @@ public class Item : MonoBehaviour
     public Color itemSelectedColor;
     public Color itemAlreadyBought;
 
-
     private void Start()
     {
+        // If the item is showing on the invetory UI
         if (isInventory)
         {
+            // Ignore it
             return;
         }
 
+        // Update the UI from the shop of all the items that the player already has in his inventory
         switch (itemType)
         {
             case ItemType.Weapon:
@@ -56,6 +56,7 @@ public class Item : MonoBehaviour
         }
     }
 
+    // Method for marking an item as bought
     public void ItemBought()
     {
         background.color = itemAlreadyBought;

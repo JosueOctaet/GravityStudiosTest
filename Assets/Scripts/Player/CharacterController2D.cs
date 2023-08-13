@@ -1,6 +1,5 @@
 using PlayerStates;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class CharacterController2D : MonoBehaviour
@@ -71,7 +70,7 @@ public class CharacterController2D : MonoBehaviour
             transform.localScale = new Vector2(-Mathf.Abs(transform.localScale.x), transform.localScale.y);
         }
         // If moving right
-        else if (horizontalDirection > 0) 
+        else if (horizontalDirection > 0)
         {
             // Change to "WalkSide" state
             stateMachine.ChangeState("WalkSide");
@@ -110,14 +109,15 @@ public class CharacterController2D : MonoBehaviour
     {
         if (horizontalDirection != 0 || verticalDirection != 0) // If moving in any direction
         {
+            // Set velocity based on input direction and speed 
             rb.velocity = new Vector2(horizontalDirection * speed, verticalDirection * speed);
-            /* Set velocity based on input direction and speed */
+
         }
         else
         {
-            /* Change to "Idle" state if not moving in any direction */
+            // Change to "Idle" state if not moving in any direction
             stateMachine.ChangeState("Idle");
-            /* Set velocity to zero if not moving in any direction */
+            // Set velocity to zero if not moving in any direction
             rb.velocity = new Vector2(0, 0);
         }
     }

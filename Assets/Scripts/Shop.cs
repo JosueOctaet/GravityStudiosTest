@@ -1,13 +1,13 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class Shop : MonoBehaviour
 {
     public CharacterController2D player;
     public PlayerData playerData;
     public Inventory inventory;
+    public List<GameObject> weaponsObjs;
 
     public Item selectedItem;
     public Item lastItemSelected;
@@ -17,7 +17,7 @@ public class Shop : MonoBehaviour
     // Method for selecting an item in the shop
     public void SelectItem(Item selection)
     {
-        if(selection.isAlreadyBought)
+        if (selection.isAlreadyBought)
         {
             return;
         }
@@ -43,8 +43,14 @@ public class Shop : MonoBehaviour
             }
         }
 
+        // Reset the player's weapons objects
+        foreach (var weapon in weaponsObjs)
+        {
+            weapon.SetActive(false);
+        }
+
         // If there was a previously selected item, reset its color to white
-        if (lastItemSelected != null)
+        if (lastItemSelected != null && !lastItemSelected.isAlreadyBought)
         {
             lastItemSelected.background.color = Color.white;
         }
@@ -56,26 +62,41 @@ public class Shop : MonoBehaviour
         selectedItem.background.color = selection.itemSelectedColor;
         costText.text = $"{selection.itemName}: ${selection.cost}";
 
-        // Change the player's clothes to match the selected item
-        foreach (var item in playerData.clothesSprites)
+        if (selection.itemType == ItemType.Clothes)
         {
-            if (item.name == selection.itemName)
+            // Change the player's clothes to match the selected item
+            foreach (var item in playerData.clothesSprites)
             {
-                if (selection.itemName.Contains("Face"))
+                if (item.name == selection.itemName)
                 {
-                    player.face.sprite = item;
+                    if (selection.itemName.Contains("Face"))
+                    {
+                        player.face.sprite = item;
+                    }
+                    else if (selection.itemName.Contains("Hood"))
+                    {
+                        player.hood.sprite = item;
+                    }
+                    else if (selection.itemName.Contains("Shirt"))
+                    {
+                        player.shirt.sprite = item;
+                    }
+                    else if (selection.itemName.Contains("Pants"))
+                    {
+                        player.pants.sprite = item;
+                    }
                 }
-                else if (selection.itemName.Contains("Hood"))
+            }
+        }
+        else
+        {
+            // Change the player's weapon
+            foreach (var weapon in weaponsObjs)
+            {
+                if (weapon.name == selection.itemName)
                 {
-                    player.hood.sprite = item;
-                }
-                else if (selection.itemName.Contains("Shirt"))
-                {
-                    player.shirt.sprite = item;
-                }
-                else if (selection.itemName.Contains("Pants"))
-                {
-                    player.pants.sprite = item;
+                    weapon.SetActive(true);
+                    break;
                 }
             }
         }
@@ -112,6 +133,7 @@ public class Shop : MonoBehaviour
         weapon.ItemBought();
         // Save the weapon in the weapons inventory
         playerData.weaponsInventory.Add(weapon.itemName);
+        inventory.UpdateWeaponsInventory();
     }
 
     // Method for adding clothes to the clothes inventory

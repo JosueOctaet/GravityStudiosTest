@@ -37,6 +37,10 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 3d9056df586b6024fbc5b9fee2433eef, type: 3}
   - {fileID: 21300000, guid: fff248787aa9dc44d819b77a6686c0af, type: 3}
   - {fileID: 21300000, guid: 250530d3e9754ed418009e3d539275b3, type: 3}
+  WeaponsSprites:
+  - {fileID: 21300000, guid: eaf47445984c92949919c0539a6444f1, type: 3}
+  - {fileID: 21300000, guid: ec2cf133a29d970478643631ae74263a, type: 3}
+  - {fileID: 21300000, guid: a6b99fa4e8a62a149a6f3712dc63e374, type: 3}
   weaponsInventory: []
   clothesInventory:
   - Face
